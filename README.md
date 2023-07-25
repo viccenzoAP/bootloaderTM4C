@@ -19,7 +19,7 @@ This code was tested on a raspberry pi zero 2W over a USB to Serial adapter (/de
   ![image](https://github.com/viccenzoAP/bootloaderTM4C/assets/98824931/daab0608-a12f-40ee-b0cb-a8e098930c51)
 * Run the process with "sudo node index.js" command     
 
-## expected behavior
+## Expected behavior
 
 * the sistem will automaticaly restart and enter em boot mode (all led indication green)
 * the sistem will perform a memory cleaning proceadure and, if successfull, all leds will turn off
