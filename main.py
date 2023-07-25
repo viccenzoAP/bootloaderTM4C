@@ -1,6 +1,5 @@
 import serial
 import time
-from tkinter import filedialog as fd
 import binascii
 import os
 import math
@@ -13,13 +12,12 @@ port = True
 dirname = os.path.dirname(__file__)
 filename = os.path.join(dirname, 'data/ota.bin')
 
-
-
 def flash_full(file_path_param):
-    success = 0
+    fail = 0
     if not file_path_param:
         print("Choose a compatible file")
     else:
+        atempts = 0;
         apagar_mem()
         time.sleep(0.05)
         while conectado.in_waiting:
@@ -28,11 +26,12 @@ def flash_full(file_path_param):
                 print("ack sucess!")
             if data_in == b"\x01\xa1\x01\xa5":
                 print("Erase sucess!")
-                success = success + 1
-                #print(success)
             if data_in == b"\x01\xa1\xf0\xa5":
                 print("Erase failed!")
+                fail = 1
             #print(data_in)
+        atempts = atempts + 1
+        time.sleep(0.5)
         flashing_request(file_path_param)
         time.sleep(0.05)
         while conectado.in_waiting:
@@ -41,10 +40,9 @@ def flash_full(file_path_param):
                 print("ack sucess!")
             if data_in == b"\x01\xa2\x01\xa5":
                 print("Flashing request accepted!")
-                success = success + 1
-                #print(success)
             if data_in == b"\x01\xa2\x00\xa5":
                 print("Flashing request refused!")
+                fail = 1
             #print(data_in)
         flash_data(file_path_param)
         time.sleep(0.05)
@@ -56,10 +54,9 @@ def flash_full(file_path_param):
                 print("Writing flash memory succeeded, send next chunk of data")
             if data_in == b"\x01\xa3\x00\xa5":
                 print("Flashing refused!")
+                fail = 1
             if data_in == b"\x01\xa3\x02\xa5":
                 print("Writing flash memory succeeded, application is now completely transferred")
-                success = success + 1
-                #print(success)
             #print(data_in)
         flash_end(file_path_param)
         time.sleep(0.05)
@@ -69,13 +66,12 @@ def flash_full(file_path_param):
                 print("ack sucess!")
             if data_in == b"\x01\xa4\x01\xa5":
                 print("Flash end accepted!")
-                success = success + 1
-                #print(success)
             if data_in == b"\x01\xa4\x00\xa5":
                 print("Flash end refused!")
-            #print(data_in)
-        #print(success)
-        if success == 4:
+                fail = 1
+            print(data_in)
+        print(fail)
+        if fail !=1:
             print("Boot process was successfull",end="")
         else:
             print("Boot process failed",end="")
@@ -127,14 +123,14 @@ def flash_data(file_path_param):
             time.sleep(0.05)
             while conectado.in_waiting:
                 data_in_flash = conectado.read(4)
-                """ if data_in_flash == b"\x01\xaa\x03\xa5":
+                if data_in_flash == b"\x01\xaa\x03\xa5":
                     print("ack sucess!")
                 if data_in_flash == b"\x01\xa3\x01\xa5":
                     print("Writing flash memory succeeded, send next chunk of data")
                 if data_in_flash == b"\x01\xa3\x00\xa5":
                     print("Flashing refused!")
                 if data_in_flash == b"\x01\xa3\x02\xa5":
-                    print("Writing flash memory succeeded, application is now completely transferred") """
+                    print("Writing flash memory succeeded, application is now completely transferred")
                 #print(data_in_flash)
         last_data_lenth = os.path.getsize(file_path_param) - nbytes_div252*252
         last_byte_array = bytearray(f.read(last_data_lenth))
@@ -144,7 +140,7 @@ def flash_data(file_path_param):
         buffer.append(0xA5)
         conectado.write(buffer)
         time.sleep(0.05)
-        """ while conectado.in_waiting:
+        while conectado.in_waiting:
             data_in_flash = conectado.read(4)
             if data_in_flash == b"\x01\xaa\x03\xa5":
                 print("ack sucess!")
@@ -154,7 +150,7 @@ def flash_data(file_path_param):
                 print("Flashing refused!")
             if data_in_flash == b"\x01\xa3\x02\xa5":
                 print("Writing flash memory succeeded, application is now completely transferred")
-            print(data_in_flash) """
+            print(data_in_flash) 
 
 def flashing_request(file_path_param):
     if not file_path_param:
