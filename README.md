@@ -8,10 +8,9 @@ This code was tested on a raspberry pi zero 2W over a USB to Serial adapter (/de
 
 ## Instalation process
 
-* Install node, npm and python
-
-* clone this repository  
+* Install node, npm and python    
   ![image](https://github.com/viccenzoAP/bootloaderTM4C/assets/98824931/d531aebf-e98f-490f-9c17-7c81495a755c)
+* clone this repository  
 * Install npm packages inside the folder (sudo npm i)    
   ![image](https://github.com/viccenzoAP/bootloaderTM4C/assets/98824931/1da3e95d-02d8-4468-afdb-86bc732a18af)
 * save the firmware file inside the "data" folder and name the file "ota.bin"      
