@@ -10,7 +10,6 @@ This code was tested on a raspberry pi zero 2W over a USB to Serial adapter (/de
 
 * Install node, npm and python
 
-
 * clone this repository  
   ![image](https://github.com/viccenzoAP/bootloaderTM4C/assets/98824931/d531aebf-e98f-490f-9c17-7c81495a755c)
 * Install npm packages inside the folder (sudo npm i)    
@@ -18,6 +17,12 @@ This code was tested on a raspberry pi zero 2W over a USB to Serial adapter (/de
 * save the firmware file inside the "data" folder and name the file "ota.bin"      
   ![image](https://github.com/viccenzoAP/bootloaderTM4C/assets/98824931/daab0608-a12f-40ee-b0cb-a8e098930c51)
 * Run the process with "sudo node index.js" command     
+
+## Changes to code
+
+* Change the marked values shown on the image below
+![image](https://github.com/viccenzoAP/bootloaderTM4C/assets/98824931/6084994e-5fd3-4f45-b8ee-9632ba699071)
+
 
 ## Expected behavior
 
