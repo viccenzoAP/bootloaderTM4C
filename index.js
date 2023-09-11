@@ -17,6 +17,13 @@ success = 0
 fail = 0
 
 async function main(){
+    result = await flash();
+    if(result == 1){
+            console.log("Boot successfull");
+    }else{
+        console.log("Boot failed");
+    }
+/*
     for(i=0;i<100;i++){
         console.log("Boot attempt: " + i)
         result = await flash();
@@ -30,7 +37,7 @@ async function main(){
         }
     }
     console.log("After 100 attempts the chip had booted " + success + " successfully and " + fail + " failed tries");
-    
+    */
 }
 
 async function flash(){

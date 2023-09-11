@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "raspi-serial": "^6.0.0",
     "rpio": "^2.4.2"
   }
 }
